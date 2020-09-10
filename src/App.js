@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { Component }from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
+const ITEMS_URL = "http://apitest.historyit.com/example.php";
+
+class App extends Component {
+  
+  state = {
+    items: []
+  };
+
+  componentDidMount() {
+    fetch(ITEMS_URL)
+      .then(res => res.json())
+      .then(items => {
+        this.setState({ items })
+      });
+  };
+
+  render() {
+    return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -20,7 +36,8 @@ function App() {
         </a>
       </header>
     </div>
-  );
+    )
+  }
 }
 
 export default App;
