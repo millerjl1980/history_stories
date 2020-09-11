@@ -1,8 +1,9 @@
 import React, { Component }from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 
-const ITEMS_URL = "http://apitest.historyit.com/example.php";
+const ITEMS_URL = "http://127.0.0.1:8080/example.php";
 
 class App extends Component {
   
@@ -11,11 +12,12 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch(ITEMS_URL)
-      .then(res => res.json())
-      .then(items => {
-        this.setState({ items })
-      });
+    axios.get(ITEMS_URL)
+    .then(res => {
+      const items = res.data.results;
+      console.log(items)
+      this.setState({ items });
+    })
   };
 
   render() {
