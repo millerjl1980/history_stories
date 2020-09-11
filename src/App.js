@@ -4,6 +4,7 @@ import { Items } from './components/Items';
 import { Pagination } from './components/Pagination';
 
 const ITEMS_URL = "https://justinmiller.dev/api_test/example.php";
+const CORS_KEY = "https://cors-anywhere.herokuapp.com/"
 
 const App = () => {
   const [items, setItems] = useState([]);
@@ -14,7 +15,7 @@ const App = () => {
   useEffect(() => {
     const fetchItems = async () => {
       setLoading(true);
-      const res = await axios.get(ITEMS_URL);
+      const res = await axios.get(CORS_KEY + ITEMS_URL);
       setItems(res.data.results);
       setLoading(false);
     }
