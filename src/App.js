@@ -1,6 +1,5 @@
 import React, { Component }from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
 import './App.css';
 
 const ITEMS_URL = "http://127.0.0.1:8080/example.php";
@@ -21,23 +20,24 @@ class App extends Component {
   };
 
   render() {
+    const { items = [] } = this.state;
     return (
+    <React.Fragment>
+      
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {items.map(item => (
+        <div>
+        <h1>{item.attribute_values[0].value.text}</h1>
+        <img
+              alt={item.attribute_values[0].value.text}
+              src={item.digital_assets[0].large_thumbnail}
+        />
+        <p>Date:  {item.attribute_values[1].value.date}</p>
+        <p>{item.attribute_values[3].value.text}</p>
+        </div>
+      ))}
     </div>
+    </React.Fragment>
     )
   }
 }
