@@ -1,53 +1,44 @@
-import React, { Component }from 'react';
+import React, { useState, useEffect }from 'react';
 import axios from 'axios';
-import './App.css';
+import { Items } from './components/Items';
+import { Pagination } from './components/Pagination';
 
-const ITEMS_URL = "http://127.0.0.1:8080/example.php";
+const ITEMS_URL = "https://justinmiller.dev/api_test/example.php";
 
-class App extends Component {
-  
-  state = {
-    items: []
-  };
+const App = () => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
 
-  componentDidMount() {
-    axios.get(ITEMS_URL)
-    .then(res => {
-      const items = res.data.results;
-      console.log(items)
-      this.setState({ items });
-    })
-  };
+  useEffect(() => {
+    const fetchItems = async () => {
+      setLoading(true);
+      const res = await axios.get(ITEMS_URL);
+      setItems(res.data.results);
+      setLoading(false);
+    }
+    fetchItems();
+  }, []);
 
-  render() {
-    const { items = [] } = this.state;
-    return (
-    <React.Fragment>
-      
+  // Get current posts
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+
+  //changing page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+  return(
     <div className="App">
-      {items.map(item => (
-        <div class="row project-item">
-          <div class="col-sm-3">
-              <img
-              alt={item.attribute_values[0].value.text}
-              src={item.digital_assets[0].large_thumbnail}
-              />
-          </div>
-          <div class="col-sm-3 col">
-            {item.attribute_values[0].value.text}
-          </div>
-          <div class="col-sm-3 col">
-            {item.attribute_values[1].value.date}
-          </div>
-          <div class="col-sm-3">
-             {item.attribute_values[3].value.text}
-          </div>
-      </div>
-      ))}
+      <Items items={currentItems} loading={loading} />
+      <Pagination 
+        itemsPerPage={itemsPerPage}
+        totalItems={items.length}
+        paginate={paginate}
+      />
     </div>
-    </React.Fragment>
-    )
-  }
+  )
+  
 }
-
 export default App;
