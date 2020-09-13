@@ -1,13 +1,11 @@
 import React from 'react'
 
 export const Items = ({ items, loading }) => {
-    if(loading){
-        return <h2>Loading...</h2>
-    }
+
     return (
         <div className="row project-item">
             {items.map(item => (
-                <a href="articleview.html">
+                <a key={ item.id } href="articleview.html">
                     <div className="col-sm-3">
                         <img
                         alt={item.attribute_values[0].value.text}
