@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Items = ({ items, loading }) => {
+export const Items = ({ items }) => {
 
     return (
         <div className="row project-item">

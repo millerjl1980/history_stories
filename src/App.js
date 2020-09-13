@@ -46,7 +46,7 @@ const App = () => {
         collectionItem={ collectionItem }
         totalItems={ totalItems }
       />
-      <Items items={currentItems} loading={loading} />
+      <Items items={currentItems} />
       <Pagination 
         itemsPerPage={itemsPerPage}
         totalItems={totalItems}
