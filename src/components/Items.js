@@ -13,13 +13,13 @@ export const Items = ({ items }) => {
                         />
                     </div>
                     <div className="col-sm-3 col">
-                    {item.attribute_values[0].value.text}
+                    {item.attribute_values[0].value.text.replace(/&#039;/g, `'`)}
                     </div>
                     <div className="col-sm-3 col">
                     {item.attribute_values[1].value.date}
                     </div>
                     <div className="col-sm-3">
-                    {item.attribute_values[3].value.text}
+                    {item.attribute_values[3].value.text.replace(/&#039;/g, `'`)}
                     </div>
                 </a>
             ))}
